@@ -1,4 +1,4 @@
-[gd_scene load_steps=46 format=3 uid="uid://hqw3f50q5l6x"]
+[gd_scene load_steps=47 format=3 uid="uid://hqw3f50q5l6x"]
 
 [ext_resource type="Script" path="res://scripts/CharacterBody2D.gd" id="1_fucrj"]
 [ext_resource type="Texture2D" uid="uid://bccjreg5txub7" path="res://sprites/icon.svg" id="2_0nif7"]
@@ -8,6 +8,7 @@
 [ext_resource type="Script" path="res://scripts/grab_area.gd" id="3_qdxev"]
 [ext_resource type="Script" path="res://scripts/ScoreCollision.gd" id="4_6rpyt"]
 [ext_resource type="PackedScene" uid="uid://dj6tn2l176d8g" path="res://scenes/wall_vertical.tscn" id="4_usgwl"]
+[ext_resource type="Texture2D" uid="uid://bwon2m1v8okd8" path="res://sprites/Puck.png" id="6_y0i6h"]
 [ext_resource type="Script" path="res://scripts/control.gd" id="7_kwc7n"]
 [ext_resource type="PackedScene" uid="uid://c4xc2ryjl7b1d" path="res://scenes/pause_menu.tscn" id="10_p6g4u"]
 
@@ -255,7 +256,7 @@ shape = SubResource("CircleShape2D_anu0g")
 
 [node name="Sprite2D" type="Sprite2D" parent="Puck"]
 material = SubResource("CanvasItemMaterial_i775o")
-texture = ExtResource("2_0nif7")
+texture = ExtResource("6_y0i6h")
 
 [node name="Timer" type="Timer" parent="Puck"]
 

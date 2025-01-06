@@ -1,8 +1,11 @@
 extends Control
 
 @onready var label: Label = $MarginContainer/VBoxContainer/Label
+@onready var back: Button = $MarginContainer/VBoxContainer/Back
 
 func _ready() -> void:
+	back.grab_focus()
+	
 	if(Global.bottom_player_win):
 		label.text = "P1 Wins!"
 	else:
