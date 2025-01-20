@@ -86,19 +86,24 @@ func _physics_process(delta):
 		var collision = get_slide_collision(i)
 		if(collision.get_collider() is RigidBody2D && collision_counter == 0 && no_collisions <= 0):
 			collision_counter = 50
-			if(lunging):
-				collision.get_collider().apply_central_impulse(-collision.get_normal() * (outgoing_force * 3))
-			else:
-				collision.get_collider().apply_central_impulse(-collision.get_normal() * outgoing_force)
 			if(abs(puck.linear_velocity.length()) > abs(speed) * 3/4 && puck.linear_velocity.length() > 300 || velocity == Vector2.ZERO && puck.linear_velocity.length() >= 300):
 				stunned = true
 				stun_counter = 50
+				puck.set_collision_mask_value(6, false)
+				set_collision_mask_value(3, false)
 				velocity = Vector2.ZERO
+			else:
+				if(lunging):
+					collision.get_collider().apply_central_impulse(-collision.get_normal() * (outgoing_force * 3))
+				else:
+					collision.get_collider().apply_central_impulse(-collision.get_normal() * outgoing_force)
 	
 	if(stunned && stun_counter > 0):
 		stun_counter -= 1
 		if(stun_counter <= 0):
 			stunned = false
+			puck.set_collision_mask_value(6, true)
+			set_collision_mask_value(3, true)
 			
 	if(grabbed):
 		direction_type = randi_range(4, 6)

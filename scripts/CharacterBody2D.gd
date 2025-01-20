@@ -99,7 +99,10 @@ func _physics_process(delta):
 		speed = 1200
 		if(lunge_duration > 0.0):
 			lunge_duration -= 1.0
-			if(lunge_duration == 0.0):
+			if(lunge_duration <= 0.0):
+				print("iermhcgerjkhbcgekjtrg")
+				puck.set_collision_mask_value(4, true)
+				set_collision_mask_value(3, true)
 				lunging = false
 				
 	else:
@@ -136,14 +139,18 @@ func _physics_process(delta):
 		var collision = get_slide_collision(i)
 		if(collision.get_collider() is RigidBody2D && collision_counter == 0 && no_collisions <= 0):
 			collision_counter = 50
-			if(lunging):
-				collision.get_collider().apply_central_impulse(-collision.get_normal() * (outgoing_force * 3))
-			else:
-				collision.get_collider().apply_central_impulse(-collision.get_normal() * outgoing_force)
 			if(abs(puck.linear_velocity.length()) > abs(speed) * 3/4 && puck.linear_velocity.length() > 300 || velocity == Vector2.ZERO && puck.linear_velocity.length() >= 300):
 				stunned = true
 				stun_counter = 50
 				velocity = Vector2.ZERO
+				puck.set_collision_mask_value(4, false)
+				set_collision_mask_value(3, false)
+				print("FUCKBOBMOALF")
+			else:
+				if(lunging):
+					collision.get_collider().apply_central_impulse(-collision.get_normal() * (outgoing_force * 3))
+				else:
+					collision.get_collider().apply_central_impulse(-collision.get_normal() * outgoing_force)
 	
 	#set throw bar location
 	throw_bar.position.x = position.x - 65
