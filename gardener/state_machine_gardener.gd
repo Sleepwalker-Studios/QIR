@@ -1,12 +1,12 @@
 extends Node
 
-@export var initial_state: passive
-var current_state = passive
+@export var initial_state: passive_gardener
+var current_state = passive_gardener
 var states : Dictionary = {}
 
 func _ready():
 	for child in get_children():
-		if child is State:
+		if child is State_gardener:
 			states[child.name.to_lower()] = child
 			child.Transitioned.connect(_on_child_transition)
 			
