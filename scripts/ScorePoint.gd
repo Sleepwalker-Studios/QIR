@@ -42,6 +42,8 @@ func _on_area_2d_body_entered(body: Node2D) -> void:
 			Global.user_score = 0
 			Global.bot_score = 0
 			Global.bottom_player_win = true
+			for child in get_parent().get_children():
+				child.queue_free()
 			get_tree().change_scene_to_file("res://scenes/WinScreen.tscn")
 		else:
 			timer.start()

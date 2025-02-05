@@ -1,15 +1,21 @@
-[gd_scene load_steps=4 format=3 uid="uid://cf1u3cnyuu0g0"]
+[gd_scene load_steps=6 format=3 uid="uid://cf1u3cnyuu0g0"]
 
 [ext_resource type="Texture2D" uid="uid://bccjreg5txub7" path="res://sprites/icon.svg" id="1_tglbw"]
+[ext_resource type="Script" path="res://scenes/area_2d.gd" id="2_pm8ik"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_jbx7w"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_roabn"]
 radius = 50.0
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_1lofa"]
+radius = 50.0
+
 [node name="Node2D" type="Node2D"]
 
 [node name="StaticBody2D" type="StaticBody2D" parent="."]
+collision_layer = 64
+collision_mask = 4
 physics_material_override = SubResource("PhysicsMaterial_jbx7w")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
@@ -18,3 +24,14 @@ shape = SubResource("CircleShape2D_roabn")
 [node name="Sprite2D" type="Sprite2D" parent="StaticBody2D"]
 scale = Vector2(0.75, 0.75)
 texture = ExtResource("1_tglbw")
+
+[node name="Area2D" type="Area2D" parent="StaticBody2D"]
+scale = Vector2(1.1, 1.1)
+collision_layer = 64
+collision_mask = 4
+script = ExtResource("2_pm8ik")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D/Area2D"]
+shape = SubResource("CircleShape2D_1lofa")
+
+[connection signal="body_exited" from="StaticBody2D/Area2D" to="StaticBody2D/Area2D" method="_on_body_exited"]

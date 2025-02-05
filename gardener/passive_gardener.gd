@@ -9,6 +9,8 @@ var wandering_time
 var move_direction
 var move_speed = 200
 var garden_time
+var scene = preload("res://scenes/plant.tscn")
+var reference: Array = []
 
 func _ready():
 	if Ai == null:
@@ -31,25 +33,8 @@ func Update(delta: float):
 		garden_time -= delta
 
 	else:
-		var plant = StaticBody2D.new()
-		var plant_shape = CollisionShape2D.new()
-		var plant_sprite = Sprite2D.new()
-		var circle_shape = CircleShape2D.new()
-		circle_shape.radius = 50 
-		plant_shape.shape = circle_shape
-		plant.add_child(plant_shape)
-		plant.add_child(plant_sprite)
-		plant_sprite.texture = preload("res://sprites/icon.svg")
-		plant.physics_material_override = PhysicsMaterial
-		#plant_sprite.scale.x = 3/4
-		#plant_sprite.scale.y = 3/4
-		plant.set_collision_layer_value(7, true)
-		plant.set_collision_mask(1 << 3) 
-		plant.position = Ai.position  # Set its position
-		node.add_child(plant)
-		randomize_garden()
-		
-		#area.body_entered.connect(_on_body_entered.bind(area))
+		create_plant(Ai.position)
+		garden_time = 3
 		
 	if(wandering_time > 0):
 		wandering_time -= delta
@@ -59,6 +44,13 @@ func Update(delta: float):
 #func _on_body_entered(body):
 #	if body is RigidBody2D:
 #		queue_free()
+
+func create_plant(position: Vector2):
+	var instance = scene.instantiate()
+	get_tree().root.add_child(instance)
+	instance.position = position
+	reference.append(instance)
+	
 
 func Physics_Update(delta: float):
 	
