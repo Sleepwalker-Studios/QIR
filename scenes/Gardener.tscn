@@ -4,7 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://dchlyclcgyw0q" path="res://sprites/PHPlayerSS.png" id="2_017hs"]
 [ext_resource type="Script" path="res://scripts/grab_area.gd" id="3_q1fsx"]
 [ext_resource type="Texture2D" uid="uid://4g8flseaui5d" path="res://sprites/Arrow.png" id="4_bvt2b"]
-[ext_resource type="Script" path="res://scripts/ScorePoint.gd" id="5_sapsx"]
+[ext_resource type="Script" path="res://scenes/ScorePointGardener.gd" id="5_ie2is"]
 [ext_resource type="Texture2D" uid="uid://cjhbjqr6i1hv3" path="res://sprites/PuckV2.png" id="6_1w64f"]
 [ext_resource type="PackedScene" uid="uid://b8lprc73uov6f" path="res://scenes/wall.tscn" id="7_o0ch6"]
 [ext_resource type="PackedScene" uid="uid://dj6tn2l176d8g" path="res://scenes/wall_vertical.tscn" id="8_7dht6"]
@@ -259,7 +259,7 @@ physics_material_override = SubResource("PhysicsMaterial_l5mka")
 gravity_scale = 0.0
 linear_damp = 0.15
 angular_damp = 100.0
-script = ExtResource("5_sapsx")
+script = ExtResource("5_ie2is")
 metadata/_edit_group_ = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Puck"]

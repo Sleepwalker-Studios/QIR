@@ -45,6 +45,12 @@ func Update(delta: float):
 #	if body is RigidBody2D:
 #		queue_free()
 
+func clear_plants():
+	for instance in reference:
+		if is_instance_valid(instance):
+			instance.queue_free()
+	reference.clear()
+
 func create_plant(position: Vector2):
 	var instance = scene.instantiate()
 	get_tree().root.add_child(instance)
