@@ -12,14 +12,8 @@ func _process(delta: float):
 	if(cooldown > 0.0):
 		cooldown -= delta
 		if(cooldown <= 0.0):
-			puck.set_collision_layer_value(3, true)
-			puck.set_collision_mask_value(1, true)
-			puck.set_collision_mask_value(3, true)
-			puck.set_collision_mask_value(4, true)
-			puck.set_collision_mask_value(6, true)
-			puck.set_collision_mask_value(7, true)
-			puck.collision_layer = 3
-			get_parent().get_parent().queue_free()
+			release_puck()
+			
 	if(sucked):
 		timer -= delta
 		puck.set_collision_mask_value(7, false)
@@ -50,6 +44,23 @@ func _on_body_exited(body):
 
 func _on_body_entered(body):
 	if(body is RigidBody2D):
-		if(puck.linear_velocity.length() < 400):
+		if(puck.linear_velocity.length() < 400 && !Global.ai_grabbed && !Global.plant_grabbed):
+			Global.plant_grabbed = true
 			sucked = true
 			timer = 0.5
+			
+func release_puck():
+	await get_tree().process_frame  # Wait until the next frame
+	restore_puck_collision()
+	
+func restore_puck_collision():
+	puck.collision_layer = 3
+	puck.set_collision_layer_value(3, true)
+	puck.set_collision_mask_value(1, true)
+	puck.set_collision_mask_value(3, true)
+	puck.set_collision_mask_value(4, true)
+	puck.set_collision_mask_value(6, true)
+	puck.set_collision_mask_value(7, true)
+	Global.plant_grabbed = false
+	get_parent().get_parent().queue_free()
+	

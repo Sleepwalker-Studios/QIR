@@ -15,6 +15,9 @@ var reference: Array = []
 func _ready():
 	if Ai == null:
 		Ai = get_parent().get_parent()
+	create_plant(Vector2(200, 225))
+	create_plant(Vector2(450, 250))
+	create_plant(Vector2(700, 225))
 		
 func randomize_wander():
 	move_direction = Vector2(randi_range(-1, 1), randi_range(-1, 1)).normalized()

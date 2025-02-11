@@ -125,7 +125,7 @@ func _physics_process(delta):
 				_throw()
 				
 		
-	if(!puck.complete && puck.in_ai_range && !stunned && grab_counter == 0):
+	if(!puck.complete && puck.in_ai_range && !stunned && grab_counter == 0 && !Global.plant_grabbed):
 		_grab()
 				
 	if(puck.complete && throw_counter >= 90):
@@ -133,6 +133,7 @@ func _physics_process(delta):
 			
 			
 func _grab():
+		Global.ai_grabbed = true
 		spacer = 3
 		puck.complete = true
 		print("grab!")
@@ -164,3 +165,4 @@ func _throw():
 		throw_counter = 0
 		puck.global_position.x = global_position.x
 		puck.global_position.y = global_position.y
+		Global.ai_grabbed = false
