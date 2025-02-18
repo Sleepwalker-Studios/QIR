@@ -3,7 +3,7 @@ extends Area2D
 @onready var puck = get_tree().root.get_node("Node2D/Puck")
 
 var direction = Vector2(0,1)
-var speed = 300
+var speed = 600
 var sucked = false
 var timer = 0.0
 var cooldown = 0.0
@@ -38,13 +38,13 @@ func _process(delta: float):
 			
 
 func _on_body_exited(body):
-	if(body is RigidBody2D && puck.linear_velocity.length() >= 400 && !sucked):
+	if(body is RigidBody2D && puck.linear_velocity.length() >= 500 && !sucked):
 		get_parent().get_parent().queue_free()
 
 
 func _on_body_entered(body):
 	if(body is RigidBody2D):
-		if(puck.linear_velocity.length() < 400 && !Global.ai_grabbed && !Global.plant_grabbed):
+		if(puck.linear_velocity.length() < 500 && !Global.ai_grabbed && !Global.plant_grabbed):
 			Global.plant_grabbed = true
 			sucked = true
 			timer = 0.5

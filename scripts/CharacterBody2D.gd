@@ -20,6 +20,12 @@ var collision_counter = 0
 var spacer = 0
 var direction = Vector2.ZERO
 var other_direction = Vector2.ZERO
+var throw_dir = 0
+var righttick = false
+var lefttick = false
+var pantick = 0.0
+var throw_vector = Vector2.ZERO
+var secondtick = false
 @onready var puck = get_parent().get_node("Puck")
 @onready var timer = get_parent().get_node("Puck/Timer")
 @onready var timeout = get_parent().get_node("Puck/Timeout")
@@ -161,51 +167,115 @@ func _physics_process(delta):
 		if(stun_counter <= 0):
 			stunned = false
 	if(grabbed):
+		if(righttick == false):
+			lefttick = true
 		spacer -= 1
 		$Arrow.visible = true
-		throw_bar.visible = true
+		#throw_bar.visible = true
 		print("GRABBED")
-		if(rising == true):
-			throw_counter += 2
-			if(throw_counter >= 50):
-				rising = false
-		if(rising == false):
-			throw_counter -= 2
-			if(throw_counter <= 0):
-				rising = true
-				_throw()
-		if(direction_type == 0 || direction_type == 4):
-			$Arrow.position.y = -100
-			$Arrow.position.x = 0
+		pantick-=delta
+		if(pantick <= 0):
+			pantick = 0.05
+			if(righttick):
+				throw_dir += 1
+				if(secondtick == true && throw_dir >= 10):
+					secondtick = false
+					_throw()
+				if(throw_dir >= 18):
+					righttick = false
+			if(lefttick):
+				throw_dir -= 1
+				if(throw_dir <= 0):
+					lefttick = false
+					righttick = true
+					secondtick = true
+		#if(rising == true):
+			#throw_counter += 2
+			#if(throw_counter >= 50):
+				#rising = false
+		#if(rising == false):
+			#throw_counter -= 2
+			#if(throw_counter <= 0):
+				#rising = true
+				#_throw()
+		if(throw_dir == 9):
+			throw_vector = (Vector2(0,-1.0).normalized())
+			$Arrow.position = throw_vector * 100
 			$Arrow.rotation_degrees = 0
-		if(direction_type == 1):
-			$Arrow.position.y = 0
-			$Arrow.position.x = 100
+			
+		if(throw_dir == 10):
+			throw_vector = (Vector2(0.17364817766693041,-0.984807753012208).normalized())
+			$Arrow.position = throw_vector * 100
+			$Arrow.rotation_degrees = 10
+		if(throw_dir == 11):
+			throw_vector = (Vector2(0.3420201433256688,-0.9396926207859083).normalized())
+			$Arrow.position = throw_vector * 100
+			$Arrow.rotation_degrees = 20
+		if(throw_dir == 12):
+			throw_vector = (Vector2(0.5000000000000001,-0.8660254037844386).normalized())
+			$Arrow.position = throw_vector * 100
+			$Arrow.rotation_degrees = 30
+		if(throw_dir == 13):
+			throw_vector = (Vector2(0.6427876096865394,-0.766044443118978).normalized())
+			$Arrow.position = throw_vector * 100
+			$Arrow.rotation_degrees = 40
+		if(throw_dir == 14):
+			throw_vector = (Vector2(0.766044443118978,-0.6427876096865393).normalized())
+			$Arrow.position = throw_vector * 100
+			$Arrow.rotation_degrees = 50
+		if(throw_dir == 15):
+			throw_vector = (Vector2(0.8660254037844387,-0.5).normalized())
+			$Arrow.position = throw_vector * 100
+			$Arrow.rotation_degrees = 60
+		if(throw_dir == 16):
+			throw_vector = (Vector2(0.9396926207859084,-0.3420201433256687).normalized())
+			$Arrow.position = throw_vector * 100
+			$Arrow.rotation_degrees = 70
+		if(throw_dir == 17):
+			throw_vector = (Vector2(0.984807753012208,-0.17364817766693033).normalized())
+			$Arrow.position = throw_vector * 100
+			$Arrow.rotation_degrees = 80
+		if(throw_dir == 18):
+			throw_vector = (Vector2(1.0,0).normalized())
+			$Arrow.position = throw_vector * 100
 			$Arrow.rotation_degrees = 90
-		if(direction_type == 2):
-			$Arrow.position.y = 0
-			$Arrow.position.x = -100
+		
+		if(throw_dir == 8):
+			throw_vector = (Vector2(-0.17364817766693041,-0.984807753012208).normalized())
+			$Arrow.position = throw_vector * 100
+			$Arrow.rotation_degrees = -10
+		if(throw_dir == 7):
+			throw_vector = (Vector2(-0.3420201433256688,-0.9396926207859083).normalized())
+			$Arrow.position = throw_vector * 100
+			$Arrow.rotation_degrees = -20
+		if(throw_dir == 6):
+			throw_vector = (Vector2(-0.5000000000000001,-0.8660254037844386).normalized())
+			$Arrow.position = throw_vector * 100
+			$Arrow.rotation_degrees = -30
+		if(throw_dir == 5):
+			throw_vector = (Vector2(-0.6427876096865394,-0.766044443118978).normalized())
+			$Arrow.position = throw_vector * 100
+			$Arrow.rotation_degrees = -40
+		if(throw_dir == 4):
+			throw_vector = (Vector2(-0.766044443118978,-0.6427876096865393).normalized())
+			$Arrow.position = throw_vector * 100
+			$Arrow.rotation_degrees = -50
+		if(throw_dir == 3):
+			throw_vector = (Vector2(-0.8660254037844387,-0.5).normalized())
+			$Arrow.position = throw_vector * 100
+			$Arrow.rotation_degrees = -60
+		if(throw_dir == 2):
+			throw_vector = (Vector2(-0.9396926207859084,-0.3420201433256687).normalized())
+			$Arrow.position = throw_vector * 100
+			$Arrow.rotation_degrees = -70
+		if(throw_dir == 1):
+			throw_vector = (Vector2(-0.984807753012208,-0.17364817766693033).normalized())
+			$Arrow.position = throw_vector * 100
+			$Arrow.rotation_degrees = -80
+		if(throw_dir == 0):
+			throw_vector = (Vector2(-1.0,0).normalized())
+			$Arrow.position = throw_vector * 100
 			$Arrow.rotation_degrees = -90
-		if(direction_type == 3):
-			$Arrow.position.y = 100
-			$Arrow.position.x = 0
-			$Arrow.rotation_degrees = 180
-		if(direction_type == 5):
-			$Arrow.position.y = 100
-			$Arrow.position.x = 100
-			$Arrow.rotation_degrees = 135
-		if(direction_type == 6):
-			$Arrow.position.y = -100
-			$Arrow.position.x = 100
-			$Arrow.rotation_degrees = 45
-		if(direction_type == 7):
-			$Arrow.position.y = 100
-			$Arrow.position.x = -100
-			$Arrow.rotation_degrees = -135
-		if(direction_type == 8):
-			$Arrow.position.y = -100
-			$Arrow.position.x = -100
-			$Arrow.rotation_degrees = -45
 			
 	
 	if(!puck.complete && Input.is_action_pressed("ui_grab") && grab_counter == 0):
@@ -222,6 +292,8 @@ func _grab():
 		print("grab!")
 		puck.linear_velocity = Vector2.ZERO
 		grabbed = true
+		righttick = true
+		throw_dir = 8
 		puck.freeze = true
 		puck.scale.x = 0.5
 		puck.scale.y = 0.5
@@ -237,17 +309,17 @@ func _throw():
 		puck.freeze = false
 		grab_counter = 50
 		throwing = true
-		no_collisions = 50
+		pantick = 0.0
+		lefttick = false
+		righttick = false
+		no_collisions = 100
 		puck.set_collision_mask_value(4, false)
 		set_collision_mask_value(3, false)
 		puck.scale.x = 1
 		puck.scale.y = 1
-		if(direction == Vector2.ZERO):
-			puck.linear_velocity = (speed + (25 * throw_counter)) * Vector2.UP
-		else:
-			puck.linear_velocity = (speed + (25 * throw_counter)) * direction
+		puck.linear_velocity = (800) * throw_vector
 		throw_counter = 0
-		puck.global_position.x = global_position.x
+		puck.global_position.x = global_position.x 
 		puck.global_position.y = global_position.y
 
 
