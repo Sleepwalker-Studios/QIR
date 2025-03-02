@@ -322,7 +322,7 @@ func _throw():
 		puck.scale.x = 1
 		puck.scale.y = 1
 		if(speedin < 300):
-			puck.linear_velocity = (400) * throw_vector
+			puck.linear_velocity = (600) * throw_vector
 		else:
 			puck.linear_velocity = (speedin + 300) * throw_vector
 		throw_counter = 0
