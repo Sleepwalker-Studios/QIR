@@ -26,6 +26,8 @@ var lefttick = false
 var pantick = 0.0
 var throw_vector = Vector2.ZERO
 var secondtick = false
+var speedin = 0
+var pantickset = 0.0
 @onready var puck = get_parent().get_node("Puck")
 @onready var timer = get_parent().get_node("Puck/Timer")
 @onready var timeout = get_parent().get_node("Puck/Timeout")
@@ -175,7 +177,7 @@ func _physics_process(delta):
 		print("GRABBED")
 		pantick-=delta
 		if(pantick <= 0):
-			pantick = 0.05
+			pantick = 0.1
 			if(righttick):
 				throw_dir += 1
 				if(secondtick == true && throw_dir >= 10):
@@ -288,6 +290,8 @@ func _physics_process(delta):
 func _grab():
 	if(puck.in_range && !puck.complete && Input.is_action_pressed("ui_grab") && !stunned):
 		spacer = 3
+		speedin = puck.linear_velocity.length()
+		setpantick()
 		puck.complete = true
 		print("grab!")
 		puck.linear_velocity = Vector2.ZERO
@@ -312,12 +316,15 @@ func _throw():
 		pantick = 0.0
 		lefttick = false
 		righttick = false
-		no_collisions = 100
+		no_collisions = 150
 		puck.set_collision_mask_value(4, false)
 		set_collision_mask_value(3, false)
 		puck.scale.x = 1
 		puck.scale.y = 1
-		puck.linear_velocity = (800) * throw_vector
+		if(speedin < 300):
+			puck.linear_velocity = (400) * throw_vector
+		else:
+			puck.linear_velocity = (speedin + 300) * throw_vector
 		throw_counter = 0
 		puck.global_position.x = global_position.x 
 		puck.global_position.y = global_position.y
@@ -346,3 +353,11 @@ func _on_timeout_timeout():
 			get_tree().change_scene_to_file("res://scenes/WinScreen.tscn")
 		else:
 			timer.start()
+
+func setpantick():
+	if(speedin > 1000):
+		speedin = 1000
+	if(speedin < 100):
+		speedin = 100
+	#normalize range
+	pantickset = 0.05 - ((speedin - 100)/900 * 0.04)
