@@ -11,7 +11,7 @@ var grabbed = false
 var grab_counter = 0
 var throwing = true
 var no_collisions = 0
-var speed = 400
+var speed = 500
 var outgoing_force = speed * 0.1
 var lunge_counter = 0.0
 var lunge_duration = 0.0
@@ -41,6 +41,7 @@ var pantickset = 0.0
 
 
 func _physics_process(delta):
+	#puck timeout logic
 	if(puck.global_position.y > 600 && !character_started):
 		ai_started = false
 		Global.side_ai = false
@@ -52,10 +53,13 @@ func _physics_process(delta):
 		Global.side_ai = true
 		timeout.start()
 		ai_started = true
-	#display lunge bar
+		
+		
+	#update lunge bar
 	lunge_bar.value = lunge_counter
-	#display throw bar
-	throw_bar.value = throw_counter
+	
+	
+	#MOVEMENT LOGIC
 	#get velocity vector and convert to unit vector
 	if(lunging == false):
 		direction = Vector2(int(Input.is_action_pressed("ui_right")) - int(Input.is_action_pressed("ui_left")), int(Input.is_action_pressed("ui_down")) - int(Input.is_action_pressed("ui_up")))
@@ -90,11 +94,12 @@ func _physics_process(delta):
 	if(direction.x < 0 && direction.y < 0):
 		direction_type = 8
 		animated_sprite.play("up")
+		
+		
 	#lunge cooldown counter
 	if(Input.is_action_pressed("ui_lunge") == false && lunge_counter < 100.0):
 		lunge_counter += 1.0
-	#while(Input.is_action_pressed("ui_lunge") == true && lunge_counter > 0):
-		#lunge_counter -= 1
+		
 		
 	#lunge mechanic
 	if(Input.is_action_pressed("ui_lunge") == true && lunge_counter == 100.0 || lunge_duration > 0.0):
@@ -115,6 +120,8 @@ func _physics_process(delta):
 				
 	else:
 		speed = 400
+		
+		
 	#normal movement
 	if(!grabbed && !stunned):
 		velocity = direction * speed
@@ -125,6 +132,7 @@ func _physics_process(delta):
 		if(grab_counter == 0):
 			$AnimatedSprite2D.self_modulate = Color(1, 1, 1)
 			
+			
 	#throw collision disabling
 	if(throwing):
 		no_collisions -= 1
@@ -134,14 +142,20 @@ func _physics_process(delta):
 			throwing = false
 			no_collisions = 0
 
+
+
 	#collision cooldown counter
 	if(collision_counter > 0):
 		collision_counter -= 1
 		
+		
+	#puck critical speed sensing
 	if(abs(puck.linear_velocity.length()) > abs(speed) * 3/4 && puck.linear_velocity.length() > 300 || velocity == Vector2.ZERO && puck.linear_velocity.length() >= 300):
 		puck_sprite.self_modulate = Color(1, 0, 0)
 	else:
 		puck_sprite.self_modulate = Color(1, 1 , 1)
+		
+		
 	#collision
 	for i in range(get_slide_collision_count()):
 		var collision = get_slide_collision(i)
@@ -153,31 +167,30 @@ func _physics_process(delta):
 				velocity = Vector2.ZERO
 				puck.set_collision_mask_value(4, false)
 				set_collision_mask_value(3, false)
-				print("FUCKBOBMOALF")
 			else:
 				if(lunging):
 					collision.get_collider().apply_central_impulse(-collision.get_normal() * (outgoing_force * 3))
 				else:
 					collision.get_collider().apply_central_impulse(-collision.get_normal() * outgoing_force)
 	
-	#set throw bar location
-	throw_bar.position.x = position.x - 65
-	throw_bar.position.y = position.y + 25
-			
+	
+	#stun timing decrementation		
 	if(stunned && stun_counter > 0):
 		stun_counter -= 1
 		if(stun_counter <= 0):
 			stunned = false
+			
+			
+	#TO-DO while grabbed -> throw arrow rotation logic and direction vector/arrow calculation
 	if(grabbed):
 		if(righttick == false):
 			lefttick = true
 		spacer -= 1
 		$Arrow.visible = true
-		#throw_bar.visible = true
 		print("GRABBED")
 		pantick-=delta
 		if(pantick <= 0):
-			pantick = 0.1
+			pantick = pantickset
 			if(righttick):
 				throw_dir += 1
 				if(secondtick == true && throw_dir >= 10):
@@ -191,15 +204,7 @@ func _physics_process(delta):
 					lefttick = false
 					righttick = true
 					secondtick = true
-		#if(rising == true):
-			#throw_counter += 2
-			#if(throw_counter >= 50):
-				#rising = false
-		#if(rising == false):
-			#throw_counter -= 2
-			#if(throw_counter <= 0):
-				#rising = true
-				#_throw()
+
 		if(throw_dir == 9):
 			throw_vector = (Vector2(0,-1.0).normalized())
 			$Arrow.position = throw_vector * 100
@@ -280,9 +285,11 @@ func _physics_process(delta):
 			$Arrow.rotation_degrees = -90
 			
 	
+	#grab initialization
 	if(!puck.complete && Input.is_action_pressed("ui_grab") && grab_counter == 0):
 		_grab()
-				
+	
+	#throw initialization
 	if(puck.complete && Input.is_action_just_pressed("ui_grab")):
 		_throw()
 		
@@ -360,4 +367,4 @@ func setpantick():
 	if(speedin < 100):
 		speedin = 100
 	#normalize range
-	pantickset = 0.05 - ((speedin - 100)/900 * 0.04)
+	pantickset = 0.04 - ((speedin - 100)/900 * 0.035)
