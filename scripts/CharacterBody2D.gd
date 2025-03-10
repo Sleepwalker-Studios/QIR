@@ -21,13 +21,13 @@ var spacer = 0
 var direction = Vector2.ZERO
 var other_direction = Vector2.ZERO
 var throw_dir = 0
-var righttick = false
-var lefttick = false
+var fumble = false
 var pantick = 0.0
 var throw_vector = Vector2.ZERO
 var secondtick = false
 var speedin = 0
 var pantickset = 0.0
+var rotdelay = 0.0
 @onready var puck = get_parent().get_node("Puck")
 @onready var timer = get_parent().get_node("Puck/Timer")
 @onready var timeout = get_parent().get_node("Puck/Timeout")
@@ -183,106 +183,174 @@ func _physics_process(delta):
 			
 	#TO-DO while grabbed -> throw arrow rotation logic and direction vector/arrow calculation
 	if(grabbed):
-		if(righttick == false):
-			lefttick = true
 		spacer -= 1
 		$Arrow.visible = true
 		print("GRABBED")
 		pantick-=delta
-		if(pantick <= 0):
-			pantick = pantickset
-			if(righttick):
-				throw_dir += 1
-				if(secondtick == true && throw_dir >= 10):
-					secondtick = false
-					_throw()
-				if(throw_dir >= 18):
-					righttick = false
-			if(lefttick):
-				throw_dir -= 1
-				if(throw_dir <= 0):
-					lefttick = false
-					righttick = true
-					secondtick = true
+		if(rotdelay > 0.0):
+			rotdelay -= delta
+		else:
+			rotdelay = 0.0
+			if(fumble):
+				_throw()
+			if(pantick <= 0):
+				pantick = pantickset
+				if(throw_dir < 35):
+					throw_dir += 1
+				else:
+					throw_dir = 0
+					fumble = true
 
-		if(throw_dir == 9):
+
+		if(throw_dir == 0):
 			throw_vector = (Vector2(0,-1.0).normalized())
 			$Arrow.position = throw_vector * 100
 			$Arrow.rotation_degrees = 0
 			
-		if(throw_dir == 10):
+		if(throw_dir == 1):
 			throw_vector = (Vector2(0.17364817766693041,-0.984807753012208).normalized())
 			$Arrow.position = throw_vector * 100
 			$Arrow.rotation_degrees = 10
-		if(throw_dir == 11):
+		if(throw_dir == 2):
 			throw_vector = (Vector2(0.3420201433256688,-0.9396926207859083).normalized())
 			$Arrow.position = throw_vector * 100
 			$Arrow.rotation_degrees = 20
-		if(throw_dir == 12):
-			throw_vector = (Vector2(0.5000000000000001,-0.8660254037844386).normalized())
+		if(throw_dir == 3):
+			throw_vector = (Vector2(0.5,-0.8660254037844386).normalized())
 			$Arrow.position = throw_vector * 100
 			$Arrow.rotation_degrees = 30
-		if(throw_dir == 13):
+		if(throw_dir == 4):
 			throw_vector = (Vector2(0.6427876096865394,-0.766044443118978).normalized())
 			$Arrow.position = throw_vector * 100
 			$Arrow.rotation_degrees = 40
-		if(throw_dir == 14):
+		if(throw_dir == 5):
 			throw_vector = (Vector2(0.766044443118978,-0.6427876096865393).normalized())
 			$Arrow.position = throw_vector * 100
 			$Arrow.rotation_degrees = 50
-		if(throw_dir == 15):
+		if(throw_dir == 6):
 			throw_vector = (Vector2(0.8660254037844387,-0.5).normalized())
 			$Arrow.position = throw_vector * 100
 			$Arrow.rotation_degrees = 60
-		if(throw_dir == 16):
+		if(throw_dir == 7):
 			throw_vector = (Vector2(0.9396926207859084,-0.3420201433256687).normalized())
 			$Arrow.position = throw_vector * 100
 			$Arrow.rotation_degrees = 70
-		if(throw_dir == 17):
+		if(throw_dir == 8):
 			throw_vector = (Vector2(0.984807753012208,-0.17364817766693033).normalized())
 			$Arrow.position = throw_vector * 100
 			$Arrow.rotation_degrees = 80
-		if(throw_dir == 18):
+		if(throw_dir == 9):
 			throw_vector = (Vector2(1.0,0).normalized())
 			$Arrow.position = throw_vector * 100
 			$Arrow.rotation_degrees = 90
+			
+		if(throw_dir == 17):
+			throw_vector = (Vector2(0.17364817766693041,0.984807753012208).normalized())
+			$Arrow.position = throw_vector * 100
+			$Arrow.rotation_degrees = 170
+		if(throw_dir == 16):
+			throw_vector = (Vector2(0.3420201433256688,0.9396926207859083).normalized())
+			$Arrow.position = throw_vector * 100
+			$Arrow.rotation_degrees = 160
+		if(throw_dir == 15):
+			throw_vector = (Vector2(0.5,0.8660254037844386).normalized())
+			$Arrow.position = throw_vector * 100
+			$Arrow.rotation_degrees = 150
+		if(throw_dir == 14):
+			throw_vector = (Vector2(0.6427876096865394,0.766044443118978).normalized())
+			$Arrow.position = throw_vector * 100
+			$Arrow.rotation_degrees = 140
+		if(throw_dir == 13):
+			throw_vector = (Vector2(0.766044443118978,0.6427876096865393).normalized())
+			$Arrow.position = throw_vector * 100
+			$Arrow.rotation_degrees = 130
+		if(throw_dir == 12):
+			throw_vector = (Vector2(0.8660254037844387,0.5).normalized())
+			$Arrow.position = throw_vector * 100
+			$Arrow.rotation_degrees = 120
+		if(throw_dir == 11):
+			throw_vector = (Vector2(0.9396926207859084,0.3420201433256687).normalized())
+			$Arrow.position = throw_vector * 100
+			$Arrow.rotation_degrees = 110
+		if(throw_dir == 10):
+			throw_vector = (Vector2(0.984807753012208,0.17364817766693033).normalized())
+			$Arrow.position = throw_vector * 100
+			$Arrow.rotation_degrees = 100
+		if(throw_dir == 18):
+			throw_vector = (Vector2(0.0,1.0).normalized())
+			$Arrow.position = throw_vector * 100
+			$Arrow.rotation_degrees = 180
 		
-		if(throw_dir == 8):
-			throw_vector = (Vector2(-0.17364817766693041,-0.984807753012208).normalized())
+		if(throw_dir == 19):
+			throw_vector = (Vector2(-0.17364817766693041,0.984807753012208).normalized())
 			$Arrow.position = throw_vector * 100
-			$Arrow.rotation_degrees = -10
-		if(throw_dir == 7):
-			throw_vector = (Vector2(-0.3420201433256688,-0.9396926207859083).normalized())
+			$Arrow.rotation_degrees = -170
+		if(throw_dir == 20):
+			throw_vector = (Vector2(-0.3420201433256688,0.9396926207859083).normalized())
 			$Arrow.position = throw_vector * 100
-			$Arrow.rotation_degrees = -20
-		if(throw_dir == 6):
-			throw_vector = (Vector2(-0.5000000000000001,-0.8660254037844386).normalized())
+			$Arrow.rotation_degrees = -160
+		if(throw_dir == 21):
+			throw_vector = (Vector2(-0.5000000000000001,0.8660254037844386).normalized())
 			$Arrow.position = throw_vector * 100
-			$Arrow.rotation_degrees = -30
-		if(throw_dir == 5):
-			throw_vector = (Vector2(-0.6427876096865394,-0.766044443118978).normalized())
+			$Arrow.rotation_degrees = -150
+		if(throw_dir == 22):
+			throw_vector = (Vector2(-0.6427876096865394,0.766044443118978).normalized())
 			$Arrow.position = throw_vector * 100
-			$Arrow.rotation_degrees = -40
-		if(throw_dir == 4):
-			throw_vector = (Vector2(-0.766044443118978,-0.6427876096865393).normalized())
+			$Arrow.rotation_degrees = -140
+		if(throw_dir == 23):
+			throw_vector = (Vector2(-0.766044443118978,0.6427876096865393).normalized())
 			$Arrow.position = throw_vector * 100
-			$Arrow.rotation_degrees = -50
-		if(throw_dir == 3):
-			throw_vector = (Vector2(-0.8660254037844387,-0.5).normalized())
+			$Arrow.rotation_degrees = -130
+		if(throw_dir == 24):
+			throw_vector = (Vector2(-0.8660254037844387,0.5).normalized())
 			$Arrow.position = throw_vector * 100
-			$Arrow.rotation_degrees = -60
-		if(throw_dir == 2):
-			throw_vector = (Vector2(-0.9396926207859084,-0.3420201433256687).normalized())
+			$Arrow.rotation_degrees = -120
+		if(throw_dir == 25):
+			throw_vector = (Vector2(-0.9396926207859084,0.3420201433256687).normalized())
 			$Arrow.position = throw_vector * 100
-			$Arrow.rotation_degrees = -70
-		if(throw_dir == 1):
-			throw_vector = (Vector2(-0.984807753012208,-0.17364817766693033).normalized())
+			$Arrow.rotation_degrees = -110
+		if(throw_dir == 26):
+			throw_vector = (Vector2(-0.984807753012208,0.17364817766693033).normalized())
 			$Arrow.position = throw_vector * 100
-			$Arrow.rotation_degrees = -80
-		if(throw_dir == 0):
+			$Arrow.rotation_degrees = -100
+		if(throw_dir == 27):
 			throw_vector = (Vector2(-1.0,0).normalized())
 			$Arrow.position = throw_vector * 100
 			$Arrow.rotation_degrees = -90
+			
+		if(throw_dir == 35):
+			throw_vector = (Vector2(-0.17364817766693041,-0.984807753012208).normalized())
+			$Arrow.position = throw_vector * 100
+			$Arrow.rotation_degrees = -10
+		if(throw_dir == 34):
+			throw_vector = (Vector2(-0.3420201433256688,-0.9396926207859083).normalized())
+			$Arrow.position = throw_vector * 100
+			$Arrow.rotation_degrees = -20
+		if(throw_dir == 33):
+			throw_vector = (Vector2(-0.5000000000000001,-0.8660254037844386).normalized())
+			$Arrow.position = throw_vector * 100
+			$Arrow.rotation_degrees = -30
+		if(throw_dir == 32):
+			throw_vector = (Vector2(-0.6427876096865394,-0.766044443118978).normalized())
+			$Arrow.position = throw_vector * 100
+			$Arrow.rotation_degrees = -40
+		if(throw_dir == 31):
+			throw_vector = (Vector2(-0.766044443118978,-0.6427876096865393).normalized())
+			$Arrow.position = throw_vector * 100
+			$Arrow.rotation_degrees = -50
+		if(throw_dir == 30):
+			throw_vector = (Vector2(-0.8660254037844387,-0.5).normalized())
+			$Arrow.position = throw_vector * 100
+			$Arrow.rotation_degrees = -60
+		if(throw_dir == 29):
+			throw_vector = (Vector2(-0.9396926207859084,-0.3420201433256687).normalized())
+			$Arrow.position = throw_vector * 100
+			$Arrow.rotation_degrees = -70
+		if(throw_dir == 28):
+			throw_vector = (Vector2(-0.984807753012208,-0.17364817766693033).normalized())
+			$Arrow.position = throw_vector * 100
+			$Arrow.rotation_degrees = -80
+
 			
 	
 	#grab initialization
@@ -303,8 +371,8 @@ func _grab():
 		print("grab!")
 		puck.linear_velocity = Vector2.ZERO
 		grabbed = true
-		righttick = true
-		throw_dir = 8
+		rotdelay = 0.1
+		throw_dir = 0
 		puck.freeze = true
 		puck.scale.x = 0.5
 		puck.scale.y = 0.5
@@ -321,8 +389,7 @@ func _throw():
 		grab_counter = 50
 		throwing = true
 		pantick = 0.0
-		lefttick = false
-		righttick = false
+		fumble = false
 		no_collisions = 150
 		puck.set_collision_mask_value(4, false)
 		set_collision_mask_value(3, false)
