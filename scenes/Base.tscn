@@ -448,7 +448,6 @@ scale = Vector2(0.388, 0.388)
 shape = SubResource("CircleShape2D_r454v")
 
 [node name="Arrow" type="Sprite2D" parent="Ai"]
-visible = false
 scale = Vector2(0.25, 0.25)
 texture = ExtResource("4_qjcqd")
 
