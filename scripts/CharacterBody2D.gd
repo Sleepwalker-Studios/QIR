@@ -296,5 +296,5 @@ func setpantick():
 	if(speedin < 100):
 		speedin = 100
 	#normalize range
-	var k = 0.0005
-	pantickset = 10*(1-exp(-k*(speedin-100)))
+	var k = 0.0002
+	pantickset = -1 + 11*(1-exp(-k*(speedin-100)))
