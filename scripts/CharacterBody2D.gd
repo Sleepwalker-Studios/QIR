@@ -28,6 +28,7 @@ var secondtick = false
 var speedin = 0
 var pantickset = 0.0
 var rotdelay = 0.0
+var secondrot = false
 @onready var puck = get_parent().get_node("Puck")
 @onready var timer = get_parent().get_node("Puck/Timer")
 @onready var timeout = get_parent().get_node("Puck/Timeout")
@@ -199,7 +200,11 @@ func _physics_process(delta):
 					throw_dir += 1
 				else:
 					throw_dir = 0
-					fumble = true
+					if(secondrot == false):
+						secondrot = true
+					else:
+						secondrot = false
+						fumble = true
 
 
 		if(throw_dir == 0):
@@ -374,6 +379,7 @@ func _grab():
 		rotdelay = 0.1
 		throw_dir = 0
 		puck.freeze = true
+		secondrot = false
 		puck.scale.x = 0.5
 		puck.scale.y = 0.5
 		puck.global_position = global_position
@@ -434,4 +440,4 @@ func setpantick():
 	if(speedin < 100):
 		speedin = 100
 	#normalize range
-	pantickset = 0.04 - ((speedin - 100)/900 * 0.035)
+	pantickset = 0.01 - ((speedin - 100)/900 * 0.009)

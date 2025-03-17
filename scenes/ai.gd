@@ -126,7 +126,6 @@ func _physics_process(delta):
 			if(throw_dir <= 1):
 				rising = true
 				
-				
 		if(throw_dir == 9):
 			throw_vector = (Vector2(0,-1.0).normalized())
 			$Arrow.position = throw_vector * 100
