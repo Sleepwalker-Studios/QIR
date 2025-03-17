@@ -119,11 +119,11 @@ func _physics_process(delta):
 
 		if(rising == true):
 			throw_dir += 1
-			if(throw_dir >= 9):
+			if(throw_dir >= 17):
 				rising = false
 		if(rising == false):
 			throw_dir -= 1
-			if(throw_dir <= 0):
+			if(throw_dir <= 1):
 				rising = true
 				
 				
@@ -164,10 +164,6 @@ func _physics_process(delta):
 			throw_vector = (Vector2(0.984807753012208,0.17364817766693033).normalized())
 			$Arrow.position = throw_vector * 100
 			$Arrow.rotation_degrees = 80
-		if(throw_dir == 18):
-			throw_vector = (Vector2(1.0,0).normalized())
-			$Arrow.position = throw_vector * 100
-			$Arrow.rotation_degrees = 90
 			
 			
 		if(throw_dir == 8):
@@ -202,10 +198,6 @@ func _physics_process(delta):
 			throw_vector = (Vector2(-0.984807753012208,0.17364817766693033).normalized())
 			$Arrow.position = throw_vector * 100
 			$Arrow.rotation_degrees = -80
-		if(throw_dir == 0):
-			throw_vector = (Vector2(-1.0,0.0).normalized())
-			$Arrow.position = throw_vector * 100
-			$Arrow.rotation_degrees = -90
 		
 	if(!puck.complete && puck.in_ai_range && !stunned && grab_counter == 0 && !Global.plant_grabbed):
 		_grab()
