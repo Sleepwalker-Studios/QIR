@@ -18,7 +18,7 @@ func Physics_Update(delta: float):
 	var bar = 10
 	if(Ai.global_position == Ai.puckvec):
 		Ai.velocity = Vector2.ZERO
-	elif(puck.linear_velocity.length() <= bar):
+	elif(puck.linear_velocity.length() <= bar && !char.grabbed):
 		Ai.velocity = Vector2.ZERO
 	else:
 		Ai.velocity  = Ai.direction.normalized() * Ai.speed
