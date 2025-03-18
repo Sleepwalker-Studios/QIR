@@ -116,7 +116,6 @@ func _physics_process(delta):
 		if(lunge_duration > 0.0):
 			lunge_duration -= 1.0
 			if(lunge_duration <= 0.0):
-				print("iermhcgerjkhbcgekjtrg")
 				puck.set_collision_mask_value(4, true)
 				set_collision_mask_value(3, true)
 				lunging = false

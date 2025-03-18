@@ -1,6 +1,7 @@
 extends CharacterBody2D
 class_name ai
 @onready var puck = get_parent().get_node("Puck")
+@onready var bar = get_parent().get_node("BarrierTop")
 
 var probability = 0
 var direction_type = 0
@@ -12,7 +13,7 @@ var grabbed = false
 var grab_counter = 0
 var throwing = true
 var no_collisions = 0
-var speed = 450
+var speed = 425
 var outgoing_force = speed * 0.1
 var lunge_counter = 0.0
 var lunge_duration = 0.0
@@ -28,8 +29,10 @@ var degrees = 90
 var arrow_deg = 0
 var pantickset = 0.0
 var throw_timer = 0.0
+var puckvec = Vector2.ZERO
 
 func _physics_process(delta):
+	getpuckvec()
 	
 	if(!grabbed && !stunned):
 		move_and_slide()
@@ -144,3 +147,6 @@ func setpantick():
 	#normalize range
 	var k = 0.0002
 	pantickset = -1 + 11*(1-exp(-k*(speedin-100)))
+	
+func getpuckvec():
+	puckvec = Vector2(450,45) + (puck.position - Vector2(450,45))/4
