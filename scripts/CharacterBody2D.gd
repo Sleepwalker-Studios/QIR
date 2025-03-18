@@ -315,22 +315,22 @@ func getinitdeg():
 func getinitrot():
 	var calcdeg = rad_to_deg(Vector2(1, 0).angle_to(puck.linear_velocity))
 	if(puck.position.y < position.y && puck.position.x < position.x):
-		if(calcdeg > 315):
+		if(calcdeg >= 315 && calcdeg < 360 || calcdeg <=135 && calcdeg > 0 ):
 			initrot = false
-		elif(calcdeg < 315):
+		elif(calcdeg < 315 && calcdeg > 135):
 			initrot = true
 	if(puck.position.y > position.y && puck.position.x < position.x):
-		if(calcdeg > 45):
+		if(calcdeg > 45 && calcdeg < 225):
 			initrot = false
-		elif(calcdeg < 45):
+		elif(calcdeg < 45  && calcdeg > 0 || calcdeg > 225 && calcdeg < 360):
 			initrot = true
 	if(puck.position.y < position.y && puck.position.x > position.x):
-		if(calcdeg > 225):
+		if(calcdeg > 225 && calcdeg < 360 || calcdeg < 45 && calcdeg > 0):
 			initrot = false
-		elif(calcdeg < 225):
+		elif(calcdeg < 225 && calcdeg > 45):
 			initrot = true
 	if(puck.position.y > position.y && puck.position.x > position.x):
-		if(calcdeg > 135):
+		if(calcdeg > 135 && calcdeg < 315):
 			initrot = false
-		elif(calcdeg < 135):
+		elif(calcdeg < 135 && calcdeg > 0 || calcdeg > 315 && calcdeg < 360):
 			initrot = true
