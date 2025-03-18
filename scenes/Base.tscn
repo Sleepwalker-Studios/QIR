@@ -278,7 +278,7 @@ wait_time = 7.0
 
 [node name="HorizontalWallTop" parent="." instance=ExtResource("3_b4wos")]
 position = Vector2(168, 50)
-scale = Vector2(15, 0.882)
+scale = Vector2(14, 0.823)
 collision_mask = 15
 
 [node name="BarrierTop" parent="." instance=ExtResource("3_b4wos")]
@@ -295,17 +295,17 @@ collision_mask = 16
 
 [node name="HorizontalWallTop3" parent="." instance=ExtResource("3_b4wos")]
 position = Vector2(168, 1150)
-scale = Vector2(15, 0.882)
+scale = Vector2(14, 0.823)
 collision_mask = 15
 
 [node name="HorizontalWallTop4" parent="." instance=ExtResource("3_b4wos")]
 position = Vector2(726, 1150)
-scale = Vector2(15, 0.882)
+scale = Vector2(14, 0.823)
 collision_mask = 15
 
 [node name="HorizontalWallTop2" parent="." instance=ExtResource("3_b4wos")]
 position = Vector2(726, 50)
-scale = Vector2(15, 0.882)
+scale = Vector2(14, 0.823)
 collision_mask = 15
 
 [node name="VerticalWallRight" parent="." instance=ExtResource("4_usgwl")]
