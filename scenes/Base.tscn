@@ -263,12 +263,12 @@ script = ExtResource("3_d5t5o")
 metadata/_edit_group_ = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Puck"]
-scale = Vector2(4, 4)
+scale = Vector2(4.5, 4.5)
 shape = SubResource("CircleShape2D_anu0g")
 
 [node name="Sprite2D" type="Sprite2D" parent="Puck"]
 material = SubResource("CanvasItemMaterial_i775o")
-scale = Vector2(9, 9)
+scale = Vector2(10, 10)
 texture = ExtResource("6_gj0j4")
 
 [node name="Timer" type="Timer" parent="Puck"]
