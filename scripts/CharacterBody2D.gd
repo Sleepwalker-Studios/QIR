@@ -121,7 +121,7 @@ func _physics_process(delta):
 				lunging = false
 				
 	else:
-		speed = 500
+		speed = 475
 		
 		
 	#normal movement

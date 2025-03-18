@@ -4,6 +4,7 @@
 extends State
 class_name passive
 @export var Ai: CharacterBody2D
+@onready var char = get_parent().get_parent().get_parent().get_node("Character")
 @onready var puck = get_parent().get_parent().get_parent().get_node("Puck")
 @onready var casper = get_parent().get_parent().get_parent().get_node("casper")
 
