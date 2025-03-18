@@ -11,7 +11,7 @@ var grabbed = false
 var grab_counter = 0
 var throwing = true
 var no_collisions = 0
-var speed = 625
+var speed = 500
 var outgoing_force = speed * 0.1
 var lunge_counter = 0.0
 var lunge_duration = 0.0
@@ -122,7 +122,7 @@ func _physics_process(delta):
 				lunging = false
 				
 	else:
-		speed = 400
+		speed = 500
 		
 		
 	#normal movement
