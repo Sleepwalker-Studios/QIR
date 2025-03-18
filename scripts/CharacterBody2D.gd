@@ -31,6 +31,7 @@ var rotdelay = 0.0
 var secondrot = false
 var degrees = -90
 var arrow_deg = 0
+var initdeg = 0
 @onready var puck = get_parent().get_node("Puck")
 @onready var timer = get_parent().get_node("Puck/Timer")
 @onready var timeout = get_parent().get_node("Puck/Timeout")
@@ -185,7 +186,7 @@ func _physics_process(delta):
 			
 	#TO-DO while grabbed -> throw arrow rotation logic and direction vector/arrow calculation
 	if(grabbed):
-		$Arrow.rotation_degrees = arrow_deg
+		$Arrow.rotation_degrees = degrees + 90
 		throw_vector.x = cos(deg_to_rad(degrees))
 		throw_vector.y = sin(deg_to_rad(degrees))
 		throw_vector = throw_vector.normalized()
@@ -195,14 +196,13 @@ func _physics_process(delta):
 		else:
 			spacer -= 1
 			$Arrow.visible = true
-			print("GRABBED")
 			pantick-=delta
 			degrees += (10 + pantickset)
 			arrow_deg += (10 + pantickset)
 			if(pantick <= 0):
 				pantick = 0.0000000000001
-				if(degrees >= 260):
-					degrees = -90
+				if(degrees >= initdeg + 360):
+					degrees = initdeg
 					if(secondrot == false):
 						secondrot = true
 					else:
@@ -221,6 +221,7 @@ func _physics_process(delta):
 		
 func _grab():
 	if(puck.in_range && !puck.complete && Input.is_action_pressed("ui_grab") && !stunned):
+		getinitdeg()
 		spacer = 3
 		speedin = puck.linear_velocity.length()
 		setpantick()
@@ -229,7 +230,7 @@ func _grab():
 		puck.linear_velocity = Vector2.ZERO
 		grabbed = true
 		throw_vector = Vector2(0, -1)
-		degrees = -90
+		degrees = initdeg
 		arrow_deg = 0
 		rotdelay = 0.1
 		throw_dir = 0
@@ -297,3 +298,10 @@ func setpantick():
 	#normalize range
 	var k = 0.0002
 	pantickset = -1 + 11*(1-exp(-k*(speedin-100)))
+	
+func getinitdeg():
+	var degvec = (puck.position - position)
+	initdeg = rad_to_deg(Vector2(1, 0).angle_to(degvec))
+	print(degvec)
+	print(initdeg)
+	return initdeg
