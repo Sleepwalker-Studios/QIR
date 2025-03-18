@@ -32,6 +32,7 @@ var secondrot = false
 var degrees = -90
 var arrow_deg = 0
 var initdeg = 0
+var initrot = false
 @onready var puck = get_parent().get_node("Puck")
 @onready var timer = get_parent().get_node("Puck/Timer")
 @onready var timeout = get_parent().get_node("Puck/Timeout")
@@ -197,8 +198,12 @@ func _physics_process(delta):
 			spacer -= 1
 			$Arrow.visible = true
 			pantick-=delta
-			degrees += (10 + pantickset)
-			arrow_deg += (10 + pantickset)
+			if(initrot):
+				degrees += (10 + pantickset)
+				arrow_deg += (10 + pantickset)
+			elif(!initrot):
+				degrees -= (10 + pantickset)
+				arrow_deg -= (10 + pantickset)
 			if(pantick <= 0):
 				pantick = 0.0000000000001
 				if(degrees >= initdeg + 360):
@@ -222,6 +227,7 @@ func _physics_process(delta):
 func _grab():
 	if(puck.in_range && !puck.complete && Input.is_action_pressed("ui_grab") && !stunned):
 		getinitdeg()
+		getinitrot()
 		spacer = 3
 		speedin = puck.linear_velocity.length()
 		setpantick()
@@ -305,3 +311,26 @@ func getinitdeg():
 	print(degvec)
 	print(initdeg)
 	return initdeg
+
+func getinitrot():
+	var calcdeg = rad_to_deg(Vector2(1, 0).angle_to(puck.linear_velocity))
+	if(puck.position.y < position.y && puck.position.x < position.x):
+		if(calcdeg > 315):
+			initrot = false
+		elif(calcdeg < 315):
+			initrot = true
+	if(puck.position.y > position.y && puck.position.x < position.x):
+		if(calcdeg > 45):
+			initrot = false
+		elif(calcdeg < 45):
+			initrot = true
+	if(puck.position.y < position.y && puck.position.x > position.x):
+		if(calcdeg > 225):
+			initrot = false
+		elif(calcdeg < 225):
+			initrot = true
+	if(puck.position.y > position.y && puck.position.x > position.x):
+		if(calcdeg > 135):
+			initrot = false
+		elif(calcdeg < 135):
+			initrot = true
