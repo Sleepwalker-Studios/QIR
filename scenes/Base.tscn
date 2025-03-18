@@ -230,7 +230,7 @@ shape = SubResource("CircleShape2D_51qmn")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Character"]
 material = SubResource("CanvasItemMaterial_3rmi1")
 position = Vector2(4, 0)
-scale = Vector2(0.719998, 0.719998)
+scale = Vector2(0.8, 0.8)
 sprite_frames = SubResource("SpriteFrames_rdir2")
 animation = &"up"
 
@@ -434,12 +434,12 @@ shape = SubResource("CircleShape2D_51qmn")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Ai"]
 material = SubResource("CanvasItemMaterial_3rmi1")
 position = Vector2(4, 0)
-scale = Vector2(0.719998, 0.719998)
+scale = Vector2(0.8, 0.8)
 sprite_frames = SubResource("SpriteFrames_rdir2")
 animation = &"up"
 
 [node name="GrabArea" type="Area2D" parent="Ai"]
-scale = Vector2(20, 20)
+scale = Vector2(22, 22)
 collision_mask = 7
 script = ExtResource("13_7sxiw")
 
