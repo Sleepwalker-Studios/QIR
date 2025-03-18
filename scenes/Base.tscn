@@ -439,7 +439,7 @@ sprite_frames = SubResource("SpriteFrames_rdir2")
 animation = &"up"
 
 [node name="GrabArea" type="Area2D" parent="Ai"]
-scale = Vector2(22, 22)
+scale = Vector2(25, 25)
 collision_mask = 7
 script = ExtResource("13_7sxiw")
 
