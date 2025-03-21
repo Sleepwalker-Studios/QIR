@@ -184,7 +184,7 @@ func _physics_process(delta):
 		if(stun_counter <= 0):
 			stunned = false
 			
-			
+	print(secondrot)		
 	#TO-DO while grabbed -> throw arrow rotation logic and direction vector/arrow calculation
 	if(grabbed):
 		$Arrow.rotation_degrees = degrees + 90
@@ -206,7 +206,7 @@ func _physics_process(delta):
 				arrow_deg -= (10 + pantickset)
 			if(pantick <= 0):
 				pantick = 0.0000000000001
-				if(degrees >= initdeg + 360):
+				if(degrees >= initdeg + 360 || degrees <= initdeg - 360):
 					degrees = initdeg
 					if(secondrot == false):
 						secondrot = true
@@ -250,7 +250,6 @@ func _throw():
 	if(spacer <= 0):
 		spacer = 0
 		$Arrow.visible = false
-		throw_bar.visible = false
 		puck.complete = false
 		grabbed = false
 		puck.freeze = false
@@ -302,7 +301,7 @@ func setpantick():
 	if(speedin < 100):
 		speedin = 100
 	#normalize range
-	var k = 0.0002
+	var k = 0.0001
 	pantickset = -1 + 11*(1-exp(-k*(speedin-100)))
 	
 func getinitdeg():
