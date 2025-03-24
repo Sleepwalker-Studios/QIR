@@ -65,5 +65,5 @@ func Physics_Update(delta: float):
 	
 	Ai.velocity  = move_direction * move_speed
 	
-	if (puck.linear_velocity.y < 0 && puck.global_position.y < 600):
-		Transitioned.emit(self, "active_gardener")
+#	if (puck.linear_velocity.y < 0 && puck.global_position.y < 600):
+#		Transitioned.emit(self, "active_gardener")
