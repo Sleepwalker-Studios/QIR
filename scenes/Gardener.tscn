@@ -441,7 +441,7 @@ script = ExtResource("12_2t5ij")
 metadata/_edit_group_ = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Ai"]
-scale = Vector2(4.68, 4.68)
+scale = Vector2(4.5, 4.5)
 shape = SubResource("CircleShape2D_51qmn")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Ai"]
@@ -452,12 +452,11 @@ sprite_frames = SubResource("SpriteFrames_rdir2")
 animation = &"up"
 
 [node name="GrabArea" type="Area2D" parent="Ai"]
-scale = Vector2(20, 20)
+scale = Vector2(8, 8)
 collision_mask = 7
 script = ExtResource("13_m76g0")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Ai/GrabArea"]
-scale = Vector2(0.388, 0.388)
 shape = SubResource("CircleShape2D_r454v")
 
 [node name="Arrow" type="Sprite2D" parent="Ai"]

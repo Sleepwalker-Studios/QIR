@@ -13,15 +13,14 @@ func _ready():
 		Ai = get_parent().get_parent()
 
 func Physics_Update(delta: float):
-	Ai.direction = Ai.puckvec - Ai.global_position
-	Ai.direction = Ai.direction.move_toward(Ai.direction, delta * 5.0)
 	var bar = 10
-	if(Ai.global_position == Ai.puckvec):
-		Ai.velocity = Vector2.ZERO
+	Ai.direction = Ai.puckvec - Ai.global_position
+	if(Ai.direction.length() < 5):
+		Ai.velocity = Ai.velocity.lerp(Vector2.ZERO, 0.2)
 	elif(puck.linear_velocity.length() <= bar && !char.grabbed):
-		Ai.velocity = Vector2.ZERO
+		Ai.velocity = Ai.velocity.lerp(Vector2.ZERO, 0.2)
 	else:
-		Ai.velocity  = Ai.direction.normalized() * Ai.speed
+		Ai.velocity = Ai.velocity.lerp(Ai.direction.normalized() * Ai.speed, 0.1)
 	
 	if (puck.linear_velocity.y < 0 || puck.linear_velocity.y > 0 && puck.global_position.y < 600):
 		Transitioned.emit(self, "active")

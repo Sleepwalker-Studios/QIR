@@ -118,17 +118,18 @@ func _grab():
 		
 func _throw():
 	if(spacer <= 0):
+		puck.set_collision_mask_value(6, false)
+		set_collision_mask_value(3, false)
 		spacer = 0
 		$Arrow.visible = false
 		puck.complete = false
+		velocity = Vector2.ZERO
 		grabbed = false
 		puck.freeze = false
 		grab_counter = 50
 		throwing = true
-		no_collisions = 50
+		no_collisions = 70
 		rising = true
-		puck.set_collision_mask_value(6, false)
-		set_collision_mask_value(3, false)
 		puck.scale.x = 1
 		puck.scale.y = 1
 		if(speedin < 300):

@@ -51,6 +51,8 @@ func Update(delta: float):
 	if(wandering_time <= 0.0):
 		wandering_time = 0.0
 		if(!Ai.grabbed):
+			if Ai.velocity.length() > 0:
+				Ai.velocity = Ai.velocity.lerp(Vector2.ZERO, 0.1)
 			theta += delta * move_speed 
 			if(theta >= 2*PI):
 				theta -= 2*PI
@@ -66,7 +68,7 @@ func Update(delta: float):
 			var nvelocity = move_direction * move_speed
 			if(nvelocity.length() > 200):
 				nvelocity = nvelocity.normalized() * 200
-			Ai.velocity = Ai.velocity.lerp(nvelocity, 0.05)
+			Ai.velocity = nvelocity
 			Ai.move_and_slide()
 	else:
 		wandering_time -= delta
