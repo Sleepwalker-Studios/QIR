@@ -106,6 +106,7 @@ func _grab():
 		puck.complete = true
 		print("grab!")
 		puck.linear_velocity = Vector2.ZERO
+		velocity = Vector2.ZERO
 		grabbed = true
 		throw_timer = 0.8
 		degrees = -90

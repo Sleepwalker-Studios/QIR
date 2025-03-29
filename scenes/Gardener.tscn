@@ -180,7 +180,7 @@ bounce = 1.0
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_i775o"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_4x14q"]
-size = Vector2(180, 31)
+size = Vector2(400, 30)
 
 [sub_resource type="Theme" id="Theme_s0bw5"]
 
@@ -245,7 +245,7 @@ sprite_frames = SubResource("SpriteFrames_rdir2")
 animation = &"up"
 
 [node name="GrabArea" type="Area2D" parent="Character"]
-scale = Vector2(30, 30)
+scale = Vector2(28, 28)
 collision_mask = 7
 script = ExtResource("3_q1fsx")
 
@@ -321,7 +321,7 @@ collision_mask = 15
 script = ExtResource("9_j66df")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
-position = Vector2(449, -32)
+position = Vector2(450, -30)
 shape = SubResource("RectangleShape2D_4x14q")
 
 [node name="Area2D2" type="Area2D" parent="."]
@@ -434,7 +434,7 @@ shape = SubResource("RectangleShape2D_c75ew")
 
 [node name="Ai" type="CharacterBody2D" parent="."]
 z_index = 1
-position = Vector2(449, 435)
+position = Vector2(450, 350)
 collision_layer = 32
 collision_mask = 63
 script = ExtResource("12_2t5ij")

@@ -64,6 +64,8 @@ func _physics_process(delta):
 		if(timeout.time_left < 4):
 			countdown.visible = true
 			countdown.text = str(int(timeout.time_left))
+		else:
+			countdown.visible = false
 	else:
 		countdown.visible = false
 		
