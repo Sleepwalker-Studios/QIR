@@ -18,3 +18,4 @@ shape = SubResource("SegmentShape2D_ihauc")
 offset_left = -1.0
 offset_right = 2.0
 offset_bottom = 10.0
+color = Color(0, 0, 0, 1)

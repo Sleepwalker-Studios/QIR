@@ -1,6 +1,7 @@
 extends Area2D
 
 @onready var puck = get_tree().root.get_node("Node2D/Puck")
+@onready var sm = get_tree().root.get_node("Node2D/Ai/StateMachine_gardener/passive_gardener")
 
 var direction = Vector2(0,1)
 var speed = 600
@@ -38,13 +39,15 @@ func _process(delta: float):
 			
 
 func _on_body_exited(body):
-	if(body is RigidBody2D && puck.linear_velocity.length() >= 500 && !sucked):
+	if(body is RigidBody2D && puck.linear_velocity.length() >= 800 && !sucked):
 		get_parent().get_parent().queue_free()
+		sm.plantcount -= 1
+		
 
 
 func _on_body_entered(body):
 	if(body is RigidBody2D):
-		if(puck.linear_velocity.length() < 500 && !Global.ai_grabbed && !Global.plant_grabbed):
+		if(puck.linear_velocity.length() < 800 && !Global.ai_grabbed && !Global.plant_grabbed):
 			Global.plant_grabbed = true
 			sucked = true
 			timer = 0.5
@@ -63,4 +66,5 @@ func restore_puck_collision():
 	puck.set_collision_mask_value(7, true)
 	Global.plant_grabbed = false
 	get_parent().get_parent().queue_free()
+	sm.plantcount -= 1
 	

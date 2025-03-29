@@ -33,6 +33,7 @@ var degrees = -90
 var arrow_deg = 0
 var initdeg = 0
 var initrot = false
+@onready var countdown = get_parent().get_node("Control/Countdown")
 @onready var puck = get_parent().get_node("Puck")
 @onready var timer = get_parent().get_node("Puck/Timer")
 @onready var timeout = get_parent().get_node("Puck/Timeout")
@@ -59,6 +60,12 @@ func _physics_process(delta):
 		timeout.start()
 		ai_started = true
 		
+	if(character_started || ai_started):
+		if(timeout.time_left < 4):
+			countdown.visible = true
+			countdown.text = str(int(timeout.time_left))
+	else:
+		countdown.visible = false
 		
 	#update lunge bar
 	lunge_bar.value = lunge_counter
